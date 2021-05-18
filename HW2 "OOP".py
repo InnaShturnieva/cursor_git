@@ -90,3 +90,135 @@ class Centaur(Human, Lion):
 
 abas = Centaur("Abas")
 print(abas.hunt(), abas.cook(), abas.sleep(), abas.work(), abas.study(), abas.eat(), sep='\n')
+
+# Task 2a
+
+print("Task 2a")
+
+
+class Person:
+    def __init__(self):
+        left_arm = Arm('Left arm do some action')
+        right_arm = Arm('Right arm do some action')
+        self.arms = [left_arm, right_arm]
+
+
+class Arm:
+    def __init__(self, some):
+        self.some = some
+
+
+person = Person()
+
+for arm in person.arms:
+    print(arm.some)
+
+
+# Task 2b
+
+print("Task 2b")
+
+
+class CellPhone:
+    def __init__(self, screen):
+        self.screen = screen
+
+
+class Screen:
+    def __init__(self, screen_type):
+        self.screen_type = screen_type
+
+
+diagonal = Screen("Screen has diagonal 5,5")
+phone = CellPhone(diagonal)
+print(phone.screen.screen_type)
+
+
+# Task 3
+
+print("Task 3")
+
+
+class Profile:
+    def __init__(self, name, last_name, phone_number, address, email, birthday, age, sex):
+        self.name = name
+        self.last_name = last_name
+        self.phone_number = phone_number
+        self.address = address
+        self.email = email
+        self.birthday = birthday
+        self.age = age
+        self.sex = sex
+        self.list = [self.name, self.last_name, self.phone_number, self.address, self.email,
+                     self.birthday, self.age, self.sex]
+
+    def __str__(self):
+        return str(self.list)
+
+
+profile1 = Profile(name="Robert", last_name="Nolan", phone_number="0974527134", address="New York",
+                   email="robert123@gmail.com", birthday="13.04.1987", age="34", sex="male")
+
+print(profile1)
+
+# Task 4
+
+print("Task 4")
+
+from abc import abstractmethod, ABC
+
+
+class LaptopABS(ABC):
+
+    @abstractmethod
+    def screen(self):
+        pass
+
+    @abstractmethod
+    def keyboard(self):
+        pass
+
+    @abstractmethod
+    def touchpad(self):
+        pass
+
+    @abstractmethod
+    def webcam(self):
+        pass
+
+    @abstractmethod
+    def ports(self):
+        pass
+
+    @abstractmethod
+    def dynamics(self):
+        pass
+
+
+class HPLaptop(LaptopABS):
+    def screen(self):
+        print("The screen has size 17 inch")
+        
+    def keyboard(self):
+        print("The keyboard has a backlight")
+        
+    def touchpad(self):
+        print("The touchpad has two buttons")
+        
+    def webcam(self):
+        print("The webcam has fullHD resolution")
+        
+    def ports(self):
+        print("Laptop has 3 ports")
+        
+    def dynamics(self):
+        print("Laptop has 2 dynamics")
+
+
+hp = HPLaptop()
+print(hp.screen())
+print(hp.dynamics())
+print(hp.ports())
+print(hp.webcam())
+print(hp.keyboard())
+print(hp.touchpad())
