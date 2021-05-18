@@ -51,11 +51,11 @@ tony = Tiger("Tony")
 print(tony.run(), tony.eat(), tony.sleep(), sep='\n')
 
 
-print(f"Simba is instance of Animals:", {isinstance(simba, Animals)})
-print(f"Bobik is instance of Animals:", {isinstance(bobik, Animals)})
-print(f"Murka is instance of Animals:", {isinstance(murka, Animals)})
-print(f"Felix is instance of Animals:", {isinstance(felix, Animals)})
-print(f"Tony is instance of Animals:", {isinstance(tony, Animals)})
+print(f"Simba is instance of Animals:", isinstance(simba, Animals))
+print(f"Bobik is instance of Animals:", isinstance(bobik, Animals))
+print(f"Murka is instance of Animals:", isinstance(murka, Animals))
+print(f"Felix is instance of Animals:", isinstance(felix, Animals))
+print(f"Tony is instance of Animals:", isinstance(tony, Animals))
 
 
 # Task 1.a
@@ -88,5 +88,5 @@ class Centaur(Human, Lion):
         return super().hunt()
 
 
-centaur = Centaur("Abas")
-print(centaur.hunt(), centaur.cook(), centaur.sleep(), centaur.work(), centaur.study(), centaur.eat(), sep='\n')
+abas = Centaur("Abas")
+print(abas.hunt(), abas.cook(), abas.sleep(), abas.work(), abas.study(), abas.eat(), sep='\n')
