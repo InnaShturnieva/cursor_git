@@ -58,3 +58,37 @@ mysql> SELECT * FROM phone_companies;
 +----+---------+
 3 rows in set (0,00 sec)
 
+
+mysql> INSERT INTO phones(phone_name, company_id, user_id) VALUES ('MiNote9',1,1), ('Apple12X',2,3), ('Galaxy A71',3,4);
+Query OK, 3 rows affected (0,00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM phones;
++----+------------+------------+---------+
+| id | phone_name | company_id | user_id |
++----+------------+------------+---------+
+| 10 | MiNote9    | 1          | 1       |
+| 11 | Apple12X   | 2          | 3       |
+| 12 | Galaxy A71 | 3          | 4       |
++----+------------+------------+---------+
+3 rows in set (0,00 sec)
+
+
+mysql> SELECT * FROM phones p JOIN phone_companies c ON p.company_id =c.id WHERE c.name='Xiaomi';
++----+------------+------------+---------+----+--------+
+| id | phone_name | company_id | user_id | id | name   |
++----+------------+------------+---------+----+--------+
+| 10 | MiNote9    | 1          | 1       |  1 | Xiaomi |
++----+------------+------------+---------+----+--------+
+1 row in set (0,00 sec)
+
+mysql> SELECT u.id, u.first_name, u.last_name, p.phone_name FROM users u INNER JOIN phones p ON u.id=p.user_id;
++----+------------+-----------+------------+
+| id | first_name | last_name | phone_name |
++----+------------+-----------+------------+
+|  1 | Liubomyr   | Luzhnyi   | MiNote9    |
+|  3 | Vasyl      | Mykutko   | Apple12X   |
+|  4 | Roman      | Bondar    | Galaxy A71 |
++----+------------+-----------+------------+
+3 rows in set (0,01 sec)
+
