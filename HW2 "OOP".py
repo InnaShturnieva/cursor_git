@@ -40,15 +40,15 @@ class Tiger(Animals):
 
 
 simba = Lion("Simba")
-print(simba.hunt(), simba.eat(), simba.sleep(), sep='\n')
+simba.hunt(), simba.eat(), simba.sleep()
 bobik = Dog("Bobik")
-print(bobik.serve(), bobik.eat(), bobik.sleep(), sep='\n')
+bobik.serve(), bobik.eat(), bobik.sleep()
 murka = Cat("Murka")
-print(murka.speak("Meow"), murka.eat(), murka.sleep(), sep='\n')
+murka.speak("Meow"), murka.eat(), murka.sleep()
 felix = Kangaroo("Felix")
-print(felix.jump(), felix.eat(), felix.sleep(), sep='\n')
+felix.jump(), felix.eat(), felix.sleep()
 tony = Tiger("Tony")
-print(tony.run(), tony.eat(), tony.sleep(), sep='\n')
+tony.run(), tony.eat(), tony.sleep()
 
 
 print(f"Simba is instance of Animals:", isinstance(simba, Animals))
@@ -84,12 +84,10 @@ class Centaur(Human, Lion):
     def cook(self):
         print(f"{self.__class__.__name__} {self.name} is cooking")
 
-    def hunt(self):
-        return super().hunt()
-
 
 abas = Centaur("Abas")
-print(abas.hunt(), abas.cook(), abas.sleep(), abas.work(), abas.study(), abas.eat(), sep='\n')
+abas.hunt(), abas.cook(), abas.sleep(), abas.work(), abas.study(), abas.eat()
+
 
 # Task 2a
 
@@ -198,27 +196,22 @@ class LaptopABS(ABC):
 class HPLaptop(LaptopABS):
     def screen(self):
         print("The screen has size 17 inch")
-        
+
     def keyboard(self):
         print("The keyboard has a backlight")
-        
+
     def touchpad(self):
         print("The touchpad has two buttons")
-        
+
     def webcam(self):
         print("The webcam has fullHD resolution")
-        
+
     def ports(self):
         print("Laptop has 3 ports")
-        
+
     def dynamics(self):
         print("Laptop has 2 dynamics")
 
 
 hp = HPLaptop()
-print(hp.screen())
-print(hp.dynamics())
-print(hp.ports())
-print(hp.webcam())
-print(hp.keyboard())
-print(hp.touchpad())
+hp.screen(), hp.dynamics(), hp.ports(), hp.webcam(), hp.keyboard(), hp.touchpad()
