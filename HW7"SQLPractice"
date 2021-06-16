@@ -162,3 +162,11 @@ mysql> SELECT u.first_name, u.last_name, p.title as product_title, p.price, c.ti
 +------------+-----------+---------------+----------+----------------+------------------------------------------------------------------------------------+
 3 rows in set (0,00 sec)
 
+MacBook-Pro-Scrum:~ scrum$ sudo mysqldump -u root --password=Welcome1 shop_HW7> shop_HW7.sql
+Password:
+mysqldump: [Warning] Using a password on the command line interface can be insecure.
+MacBook-Pro-Scrum:~ scrum$ ls
+Desktop		GitHub		Music		PycharmProjects	shop_HW7.sql
+Documents	Library		Pictures	linux_lecture
+Downloads	Movies		Public		my_items.sql
+
