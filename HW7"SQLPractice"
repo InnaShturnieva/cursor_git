@@ -1,0 +1,164 @@
+MacBook-Pro-Scrum:~ scrum$ sudo mysql -u root -p
+Password:
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 45
+Server version: 8.0.25 Homebrew
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE shop_HW7;
+Query OK, 1 row affected (0,00 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| my_items           |
+| mysql              |
+| performance_schema |
+| shop_HW7           |
+| sys                |
++--------------------+
+6 rows in set (0,00 sec)
+
+mysql> quit
+Bye
+MacBook-Pro-Scrum:~ scrum$ ls
+Desktop		Downloads	Library		Music		Public		linux_lecture
+Documents	GitHub		Movies		Pictures	PycharmProjects	my_items.sql
+MacBook-Pro-Scrum:~ scrum$ cd GitHub
+MacBook-Pro-Scrum:GitHub scrum$ ls
+1				HW2OOP.py			cursor_git
+HW1				Python-Martian-Manhunter-adv-	second.py
+MacBook-Pro-Scrum:GitHub scrum$ cd Python-Martian-Manhunter-adv-
+MacBook-Pro-Scrum:Python-Martian-Manhunter-adv- scrum$ ls
+homeworks	lectures
+MacBook-Pro-Scrum:Python-Martian-Manhunter-adv- scrum$ cd homeworks
+MacBook-Pro-Scrum:homeworks scrum$ ls
+databases	docker_practice	linux_and_git	oop_practice
+docker		flask		oop		tests
+MacBook-Pro-Scrum:homeworks scrum$ cd databases
+MacBook-Pro-Scrum:databases scrum$ ls
+my_items.sql	shop.sql	task		task2
+MacBook-Pro-Scrum:databases scrum$ sudo chmod 0777 shop.sql
+Password:
+MacBook-Pro-Scrum:databases scrum$ sudo mysql -u root --password=Welcome1 shop_HW7< shop.sql
+mysql: [Warning] Using a password on the command line interface can be insecure.
+MacBook-Pro-Scrum:databases scrum$ ls
+my_items.sql	shop.sql	task		task2
+MacBook-Pro-Scrum:databases scrum$ cd
+MacBook-Pro-Scrum:~ scrum$ sudo mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 47
+Server version: 8.0.25 Homebrew
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE shop_HW7;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_shop_hw7  |
++---------------------+
+| categories          |
+| categories_products |
+| product_images      |
+| products            |
+| users               |
++---------------------+
+5 rows in set (0,00 sec)
+
+mysql> SELECT * FROM products;
++----+-------+----------------------+-------------------------------------------------+----------+-----------+-----------+
+| id | title | meta_title           | description                                     | price    | old_price | is_active |
++----+-------+----------------------+-------------------------------------------------+----------+-----------+-----------+
+|  1 | Rolex | Rolex | Watch | Shop | bla bla bla bla bla bla bla bla bla bla bla bla | 14000.25 |      NULL |         1 |
++----+-------+----------------------+-------------------------------------------------+----------+-----------+-----------+
+1 row in set (0,00 sec)
+
+mysql> ALTER TABLE products ADD COLUMN user_id int NOT NULL;
+Query OK, 0 rows affected (0,01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE products set user_id=1;
+Query OK, 1 row affected (0,00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> ALTER TABLE products ADD FOREIGN KEY (user_id) REFERENCES users(id);
+Query OK, 1 row affected (0,02 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM products;
++----+-------+----------------------+-------------------------------------------------+----------+-----------+-----------+---------+
+| id | title | meta_title           | description                                     | price    | old_price | is_active | user_id |
++----+-------+----------------------+-------------------------------------------------+----------+-----------+-----------+---------+
+|  1 | Rolex | Rolex | Watch | Shop | bla bla bla bla bla bla bla bla bla bla bla bla | 14000.25 |      NULL |         1 |       1 |
++----+-------+----------------------+-------------------------------------------------+----------+-----------+-----------+---------+
+1 row in set (0,00 sec)
+
+mysql> SELECT * FROM users;
++----+------------+-----------+---------------------------+----------+
+| id | first_name | last_name | email                     | is_admin |
++----+------------+-----------+---------------------------+----------+
+|  1 | Liubomyr   | Luzhnyi   | lubomur.luzhnuy@gmail.com |        1 |
++----+------------+-----------+---------------------------+----------+
+1 row in set (0,00 sec)
+
+mysql> SELECT * FROM product_images;
++----+------------------------------------------------------------------------------------+---------+------------+
+| id | file                                                                               | alt     | product_id |
++----+------------------------------------------------------------------------------------+---------+------------+
+|  1 | https://res.cloudinary.com/hz3gmuqw6/image/upload/v1621495544/cooking_yx2glg.jpg   | Bla bla |          1 |
+|  2 | 11https://res.cloudinary.com/hz3gmuqw6/image/upload/v1621495544/cooking_yx2glg.jpg | Bla 1   |          1 |
+|  3 | 2https://res.cloudinary.com/hz3gmuqw6/image/upload/v1621495544/cooking_yx2glg.jpg  | Bla 1   |          1 |
++----+------------------------------------------------------------------------------------+---------+------------+
+3 rows in set (0,00 sec)
+
+mysql> SELECT * FROM categories_products;
++----+-------------+------------+
+| id | category_id | product_id |
++----+-------------+------------+
+|  1 |           1 |          1 |
++----+-------------+------------+
+1 row in set (0,00 sec)
+
+mysql> SELECT * FROM categories;
++----+-------+----------------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+
+| id | title | image                                                                            | meta_title   | description                                                                                                                                                                                        | is_active |
++----+-------+----------------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+
+|  1 | Watch | https://res.cloudinary.com/hz3gmuqw6/image/upload/v1621495544/cooking_yx2glg.jpg | Watch | Shop | bla bla bla bla bla bla bla bla bla bla bla bla bla blabla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla |         1 |
++----+-------+----------------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+
+1 row in set (0,00 sec)
+
+mysql> SELECT u.first_name, u.last_name, p.title as product_title, p.price, c.title as category_title, pi.file
+    -> FROM users u JOIN products p on p.user_id=u.id
+    -> JOIN categories_products cp on cp.product_id=p.id
+    -> JOIN categories c on c.id =cp.category_id
+    -> JOIN product_images pi on pi.product_id=p.id;
++------------+-----------+---------------+----------+----------------+------------------------------------------------------------------------------------+
+| first_name | last_name | product_title | price    | category_title | file                                                                               |
++------------+-----------+---------------+----------+----------------+------------------------------------------------------------------------------------+
+| Liubomyr   | Luzhnyi   | Rolex         | 14000.25 | Watch          | https://res.cloudinary.com/hz3gmuqw6/image/upload/v1621495544/cooking_yx2glg.jpg   |
+| Liubomyr   | Luzhnyi   | Rolex         | 14000.25 | Watch          | 11https://res.cloudinary.com/hz3gmuqw6/image/upload/v1621495544/cooking_yx2glg.jpg |
+| Liubomyr   | Luzhnyi   | Rolex         | 14000.25 | Watch          | 2https://res.cloudinary.com/hz3gmuqw6/image/upload/v1621495544/cooking_yx2glg.jpg  |
++------------+-----------+---------------+----------+----------------+------------------------------------------------------------------------------------+
+3 rows in set (0,00 sec)
+
