@@ -1,0 +1,53 @@
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+Digest: sha256:b3e2e47d016c08b3396b5ebe06ab0b711c34e7f37b98c9d37abe794b71cea0a2
+Status: Image is up to date for ubuntu:latest
+docker.io/library/ubuntu:latest
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+flask-app    latest    64d757c3deb6   4 hours ago    453MB
+<none>       <none>    3c907873768b   6 hours ago    453MB
+ubuntu       latest    c29284518f49   39 hours ago   72.8MB
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ docker save -o ubuntu.tar ubuntu
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ ls
+Dockerfile              HW9Docker_command.txt   ubuntu.tar
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ ls -sh ubuntu.tar
+146808 ubuntu.tar
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ tar -xvf ubuntu.tar -C ubuntu/
+x 67f62a782e3bc13002d427ac45a70cfe7484e44b7c67a843fa3e3e346bde6451/
+x 67f62a782e3bc13002d427ac45a70cfe7484e44b7c67a843fa3e3e346bde6451/VERSION
+x 67f62a782e3bc13002d427ac45a70cfe7484e44b7c67a843fa3e3e346bde6451/json
+x 67f62a782e3bc13002d427ac45a70cfe7484e44b7c67a843fa3e3e346bde6451/layer.tar
+x c29284518f497b8c5f49933e74e43ca5221e69c8251e780427f7d12f716625ff.json
+x manifest.json
+x repositories
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ ls ubuntu
+67f62a782e3bc13002d427ac45a70cfe7484e44b7c67a843fa3e3e346bde6451        manifest.json
+c29284518f497b8c5f49933e74e43ca5221e69c8251e780427f7d12f716625ff.json   repositories
+
+Task 2
+
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ docker build -t data_time_rome .
+[+] Building 2.0s (7/7) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                              0.0s
+ => => transferring dockerfile: 216B                                                                                                              0.0s
+ => [internal] load .dockerignore                                                                                                                 0.0s
+ => => transferring context: 2B                                                                                                                   0.0s
+ => [internal] load metadata for docker.io/library/ubuntu:20.10                                                                                   1.5s
+ => [1/3] FROM docker.io/library/ubuntu:20.10@sha256:39685c0f5c7e6a7cd463d0042d4a33a7d2e933e60cd8f5733ec2521a8e4892d7                             0.0s
+ => CACHED [2/3] RUN ln -snf /usr/share/zoneinfo/Europe/Rome /etc/localtime && echo Europe/Rome > /etc/timezone                                   0.0s
+ => CACHED [3/3] RUN apt-get update && apt-get install -y tzdata                                                                                  0.0s
+ => exporting to image                                                                                                                            0.3s
+ => => exporting layers                                                                                                                           0.3s
+ => => writing image sha256:2e9b81ff5d6b6713eb0c45e06c5b973b4f0ebeda4ac2ebbdbfd8864dbdbd4681                                                      0.0s
+ => => naming to docker.io/library/data_time_rome                                                                                                 0.0s
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ docker images
+REPOSITORY       TAG       IMAGE ID       CREATED         SIZE
+data_time_rome   latest    2e9b81ff5d6b   7 minutes ago   118MB
+flask-app        latest    64d757c3deb6   7 hours ago     453MB
+<none>           <none>    3c907873768b   9 hours ago     453MB
+ubuntu           latest    c29284518f49   41 hours ago    72.8MB
+(venv) MacBook-Pro-Scrum:HW9Docker_practice scrum$ docker run data_time_rome
+Thu Jul 15 18:14:57 CEST 2021
+
