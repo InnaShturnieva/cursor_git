@@ -1,0 +1,383 @@
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker build -t flask-app .
+[+] Building 41.7s (9/9) FINISHED
+ => [internal] load build definition from Dockerfile                                                                                0.0s
+ => => transferring dockerfile: 290B                                                                                                0.0s
+ => [internal] load .dockerignore                                                                                                   0.0s
+ => => transferring context: 2B                                                                                                     0.0s
+ => [internal] load metadata for docker.io/library/ubuntu:20.10                                                                     0.6s
+ => [internal] load build context                                                                                                   0.0s
+ => => transferring context: 28B                                                                                                    0.0s
+ => CACHED [1/4] FROM docker.io/library/ubuntu:20.10@sha256:39685c0f5c7e6a7cd463d0042d4a33a7d2e933e60cd8f5733ec2521a8e4892d7        0.0s
+ => [2/4] RUN apt-get update &&     apt-get install -y python3-pip                                                                 34.9s
+ => [3/4] RUN pip install flask                                                                                                     3.4s
+ => [4/4] COPY app.py /opt/                                                                                                         0.0s
+ => exporting to image                                                                                                              2.6s
+ => => exporting layers                                                                                                             2.6s
+ => => writing image sha256:3c907873768b1abcda11685bab76904d71ebe0c8959b059ffd232930c7872468                                        0.0s
+ => => naming to docker.io/library/flask-app                                                                                        0.0s
+
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED              SIZE
+flask-app    latest    3c907873768b   About a minute ago   453MB
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker run -p 8000:8080 flask-app
+ * Serving Flask app '/opt/app.py' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://172.17.0.2:8080/ (Press CTRL+C to quit)
+172.17.0.1 - - [15/Jul/2021 08:04:05] "GET / HTTP/1.1" 200 -
+172.17.0.1 - - [15/Jul/2021 08:04:06] "GET /favicon.ico HTTP/1.1" 404 -
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+235c32ef5af5   flask-app   "/bin/sh -c 'FLASK_A…"   6 minutes ago   Up 6 minutes   0.0.0.0:8000->8080/tcp, :::8000->8080/tcp   inspiring_feynman
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker stop 2
+2
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker run -d flask-app
+197ab6c754c834b255da353e35143bea80e1cb531d3b9e485fa3b6c67a13f7ce
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED          STATUS          PORTS      NAMES
+197ab6c754c8   flask-app   "/bin/sh -c 'FLASK_A…"   41 seconds ago   Up 40 seconds   8080/tcp   sleepy_wing
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker attach 1
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker stop 1
+1
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker run -it flask-app bash
+ * Serving Flask app '/opt/app.py' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://172.17.0.2:8080/ (Press CTRL+C to quit)
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED              STATUS              PORTS      NAMES
+b171e22aa3cd   flask-app   "/bin/sh -c 'FLASK_A…"   About a minute ago   Up About a minute   8080/tcp   funny_murdock
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker stop b
+b
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker run -d flask-app
+113a2652ccc2dbe7842a9c5f6008d71844812930168cf93ccf91e22e2ba9c7fc
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker inspect 113
+[
+    {
+        "Id": "113a2652ccc2dbe7842a9c5f6008d71844812930168cf93ccf91e22e2ba9c7fc",
+        "Created": "2021-07-15T08:23:03.3265443Z",
+        "Path": "/bin/sh",
+        "Args": [
+            "-c",
+            "FLASK_APP=/opt/app.py flask run --host=0.0.0.0 --port=8080"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 10874,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2021-07-15T08:23:03.6879033Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:3c907873768b1abcda11685bab76904d71ebe0c8959b059ffd232930c7872468",
+        "ResolvConfPath": "/var/lib/docker/containers/113a2652ccc2dbe7842a9c5f6008d71844812930168cf93ccf91e22e2ba9c7fc/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/113a2652ccc2dbe7842a9c5f6008d71844812930168cf93ccf91e22e2ba9c7fc/hostname",
+        "HostsPath": "/var/lib/docker/containers/113a2652ccc2dbe7842a9c5f6008d71844812930168cf93ccf91e22e2ba9c7fc/hosts",
+        "LogPath": "/var/lib/docker/containers/113a2652ccc2dbe7842a9c5f6008d71844812930168cf93ccf91e22e2ba9c7fc/113a2652ccc2dbe7842a9c5f6008d71844812930168cf93ccf91e22e2ba9c7fc-json.log",
+        "Name": "/flamboyant_rubin",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/ffd56844f1e59d1e5e8e738b9f808d61fe35e8095dbc2f87adda6bfb486c7b77-init/diff:/var/lib/docker/overlay2/usqqnkndpsym3qb9i5mecnz5m/diff:/var/lib/docker/overlay2/v9l2jhbzp7agmlqcgdm60k4db/diff:/var/lib/docker/overlay2/58vu7d9xzwdokhdbjxk4yj0kd/diff:/var/lib/docker/overlay2/9da3def5663cee61be0cf33f88c25292fa9296fdc5cb7279156f10b74826a4f6/diff",
+                "MergedDir": "/var/lib/docker/overlay2/ffd56844f1e59d1e5e8e738b9f808d61fe35e8095dbc2f87adda6bfb486c7b77/merged",
+                "UpperDir": "/var/lib/docker/overlay2/ffd56844f1e59d1e5e8e738b9f808d61fe35e8095dbc2f87adda6bfb486c7b77/diff",
+                "WorkDir": "/var/lib/docker/overlay2/ffd56844f1e59d1e5e8e738b9f808d61fe35e8095dbc2f87adda6bfb486c7b77/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "113a2652ccc2",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "FLASK_APP=app.py",
+                "FLASK_RUN_HOST=0.0.0.0"
+            ],
+            "Cmd": null,
+            "Image": "flask-app",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/bin/sh",
+                "-c",
+                "FLASK_APP=/opt/app.py flask run --host=0.0.0.0 --port=8080"
+            ],
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "5c4a3c53b6ed9fd705bd378c4bcd1c119d489a09ec9254e00d9cdfb739323246",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "8080/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/5c4a3c53b6ed",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "e0194db00ff7e1ac9ad996df76b38528ccabcadcb1535dc5e3926f0093dd4d4c",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "367b8179e7f9ff5585afb47b88ffa576ed72e4d27b14bb9275db58b9a7ddc34d",
+                    "EndpointID": "e0194db00ff7e1ac9ad996df76b38528ccabcadcb1535dc5e3926f0093dd4d4c",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker logs 113
+ * Serving Flask app '/opt/app.py' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://172.17.0.2:8080/ (Press CTRL+C to quit)
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker stop 113
+113
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker run -it --name my_story ubuntu
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+a31c7b29f4ad: Pull complete
+Digest: sha256:b3e2e47d016c08b3396b5ebe06ab0b711c34e7f37b98c9d37abe794b71cea0a2
+Status: Downloaded newer image for ubuntu:latest
+root@1c92ff7bd9c4:/# echo "Your story" > story.txt
+root@1c92ff7bd9c4:/# apt-get update && apt-get install cowsay
+Get:1 http://archive.ubuntu.com/ubuntu focal InRelease [265 kB]
+Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
+Get:3 http://archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
+Get:4 http://archive.ubuntu.com/ubuntu focal-backports InRelease [101 kB]
+Get:5 http://archive.ubuntu.com/ubuntu focal/main amd64 Packages [1275 kB]
+Get:6 http://archive.ubuntu.com/ubuntu focal/multiverse amd64 Packages [177 kB]
+Get:7 http://archive.ubuntu.com/ubuntu focal/restricted amd64 Packages [33.4 kB]
+Get:8 http://archive.ubuntu.com/ubuntu focal/universe amd64 Packages [11.3 MB]
+Get:9 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [779 kB]
+Get:10 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [27.6 kB]
+Get:11 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [368 kB]
+Get:12 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [416 kB]
+Get:13 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [32.0 kB]
+Get:14 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [1367 kB]
+Get:15 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1053 kB]
+Get:16 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [930 kB]
+Get:17 http://archive.ubuntu.com/ubuntu focal-backports/main amd64 Packages [2668 B]
+Get:18 http://archive.ubuntu.com/ubuntu focal-backports/universe amd64 Packages [6303 B]
+Fetched 18.4 MB in 5s (3399 kB/s)
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libgdbm-compat4 libgdbm6 libperl5.30 libtext-charwidth-perl netbase perl perl-modules-5.30
+Suggested packages:
+  filters cowsay-off gdbm-l10n perl-doc libterm-readline-gnu-perl | libterm-readline-perl-perl make libb-debug-perl liblocale-codes-perl
+The following NEW packages will be installed:
+  cowsay libgdbm-compat4 libgdbm6 libperl5.30 libtext-charwidth-perl netbase perl perl-modules-5.30
+0 upgraded, 8 newly installed, 0 to remove and 0 not upgraded.
+Need to get 6989 kB of archives.
+After this operation, 46.4 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 perl-modules-5.30 all 5.30.0-9ubuntu0.2 [2738 kB]
+Get:2 http://archive.ubuntu.com/ubuntu focal/main amd64 libgdbm6 amd64 1.18.1-5 [27.4 kB]
+Get:3 http://archive.ubuntu.com/ubuntu focal/main amd64 libgdbm-compat4 amd64 1.18.1-5 [6244 B]
+Get:4 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 libperl5.30 amd64 5.30.0-9ubuntu0.2 [3952 kB]
+Get:5 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 perl amd64 5.30.0-9ubuntu0.2 [224 kB]
+Get:6 http://archive.ubuntu.com/ubuntu focal/main amd64 libtext-charwidth-perl amd64 0.04-10 [9872 B]
+Get:7 http://archive.ubuntu.com/ubuntu focal/main amd64 netbase all 6.1 [13.1 kB]
+Get:8 http://archive.ubuntu.com/ubuntu focal/universe amd64 cowsay all 3.03+dfsg2-7 [18.5 kB]
+Fetched 6989 kB in 2s (3853 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package perl-modules-5.30.
+(Reading database ... 4127 files and directories currently installed.)
+Preparing to unpack .../0-perl-modules-5.30_5.30.0-9ubuntu0.2_all.deb ...
+Unpacking perl-modules-5.30 (5.30.0-9ubuntu0.2) ...
+Selecting previously unselected package libgdbm6:amd64.
+Preparing to unpack .../1-libgdbm6_1.18.1-5_amd64.deb ...
+Unpacking libgdbm6:amd64 (1.18.1-5) ...
+Selecting previously unselected package libgdbm-compat4:amd64.
+Preparing to unpack .../2-libgdbm-compat4_1.18.1-5_amd64.deb ...
+Unpacking libgdbm-compat4:amd64 (1.18.1-5) ...
+Selecting previously unselected package libperl5.30:amd64.
+Preparing to unpack .../3-libperl5.30_5.30.0-9ubuntu0.2_amd64.deb ...
+Unpacking libperl5.30:amd64 (5.30.0-9ubuntu0.2) ...
+Selecting previously unselected package perl.
+Preparing to unpack .../4-perl_5.30.0-9ubuntu0.2_amd64.deb ...
+Unpacking perl (5.30.0-9ubuntu0.2) ...
+Selecting previously unselected package libtext-charwidth-perl.
+Preparing to unpack .../5-libtext-charwidth-perl_0.04-10_amd64.deb ...
+Unpacking libtext-charwidth-perl (0.04-10) ...
+Selecting previously unselected package netbase.
+Preparing to unpack .../6-netbase_6.1_all.deb ...
+Unpacking netbase (6.1) ...
+Selecting previously unselected package cowsay.
+Preparing to unpack .../7-cowsay_3.03+dfsg2-7_all.deb ...
+Unpacking cowsay (3.03+dfsg2-7) ...
+Setting up libtext-charwidth-perl (0.04-10) ...
+Setting up perl-modules-5.30 (5.30.0-9ubuntu0.2) ...
+Setting up netbase (6.1) ...
+Setting up libgdbm6:amd64 (1.18.1-5) ...
+Setting up libgdbm-compat4:amd64 (1.18.1-5) ...
+Setting up libperl5.30:amd64 (5.30.0-9ubuntu0.2) ...
+Setting up perl (5.30.0-9ubuntu0.2) ...
+Setting up cowsay (3.03+dfsg2-7) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.2) ...
+root@1c92ff7bd9c4:/# cat story.txt|/usr/games/cowsay
+ ____________
+< Your story >
+ ------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||
+(venv) MacBook-Pro-Scrum:HW8"Docker" scrum$ docker run -it --name my_story_2 ubuntu
+root@aac170e7db03:/# ls
+bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@aac170e7db03:/# cd usr/games/cowsay
+bash: cd: usr/games/cowsay: No such file or directory
+root@aac170e7db03:/# cat story.txt
+cat: story.txt: No such file or directory
