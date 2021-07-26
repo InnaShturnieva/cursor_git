@@ -17,10 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import status
+from .views import status, random_color
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('status/', status, name='status')
+    path('status/', status, name='status'),
+    path('random_color/', random_color, name='random_color')
 ]
-
