@@ -8,5 +8,4 @@ def status(request):
 
 def random_color(request):
 	color = "%06x" % random.randint(0, 0xFFFFFF)
-	return HttpResponse("Random color is" + color)
-
+	return HttpResponse("Random color is " + color)

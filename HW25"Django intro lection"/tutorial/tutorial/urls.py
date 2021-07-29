@@ -22,5 +22,5 @@ from .views import status, random_color
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('status/', status, name='status'),
-    path('random_color/', random_color, name='random_color')
+    path('random-color', random_color, name='random-color')
 ]
