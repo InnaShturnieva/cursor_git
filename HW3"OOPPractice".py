@@ -47,3 +47,49 @@ class SmallHouse(House):
         super().__init__(area, cost)
 
 
+class RealtorMeta(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
+        return cls._instances[cls]
+
+
+class Realtor(metaclass=RealtorMeta):
+
+    def __init__(self, name, houses: list, discount):
+        self.name = name
+        self.houses = houses
+        self.discount = discount
+
+
+    def info_of_houses (self):
+        print(f"Realtor {self.name} can offer to you buy such a houses: {self.houses}")
+        for house in self.houses:
+             print (f'The area of house is {house.area}, it costs {house.cost}')
+
+    def discount(self):
+        return self.discount
+
+    @staticmethod
+    def stealing(person):
+        stolen = round(float(person.money * random.uniform(0, 0.10)), 2)
+        person.money -= stolen
+        return f'Realtor stole {stolen} amount of money. Currently {person.name} has {person.money}'
+
+    def sold_house(self, house):
+        self.houses.remove(house)
+
+
+realtor = Realtor('Monika', ['house1', 'house2', 'house3'], 0.1)
+person = Person('Chendler', 38, 100000, ['appartament'])
+house1 = House(70, 50000)
+house2 = House(50, 33000)
+house3 = House(100, 120000)
+person.info()
+realtor.info_of_houses()
+realtor.discount(house3)
+person.buy_house(house3)
+realtor.stealing(person)
